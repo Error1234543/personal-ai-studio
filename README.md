@@ -1,53 +1,40 @@
 # Personal AI Studio
 
-A personal AI workspace for chatting with AI, managing projects, and building software with an AI coding assistant.
+A mobile-first personal AI development workspace. The repository is intentionally public; **never commit credentials, tokens, private data, or `.env.local`**.
 
-## Project goals
+## Phase 1 foundation
+- Next.js App Router + TypeScript + Tailwind CSS
+- Supabase email/password registration and login
+- Google OAuth flow
+- Server-side session lookup and protected dashboard
+- Initial `profiles` and `projects` schema with Row Level Security
+- Responsive landing, auth and dashboard screens
 
-- AI chat with conversation history
-- Long-term memory with user control
-- Project and file management
-- AI-assisted code creation and editing
-- Code preview and safe testing
-- GitHub integration with approval before pushing changes
-- Vercel deployment with status monitoring
+## Run locally
+1. Install Node.js 20.9+ on a computer or use a supported cloud development environment.
+2. Copy `.env.example` to `.env.local`.
+3. Add your Supabase Project URL and publishable/anon key.
+4. In Supabase SQL Editor, run `supabase/migrations/0001_phase1_foundation.sql`.
+5. In Supabase Authentication settings, enable Email and Google providers and configure the callback URL: `http://localhost:3000/auth/callback` (also add your production callback later).
+6. Install and run:
 
-## Planned development phases
+```bash
+npm install
+npm run dev
+```
 
-1. **Foundation:** Next.js, TypeScript, responsive UI, authentication, Supabase setup, and secure database policies.
-2. **AI chat and memory:** provider settings, streaming chat, saved conversations, and memory controls.
-3. **Projects and files:** project workspace, file management, and GitHub import.
-4. **Coding agent:** planning, code tools, multi-file edits, and user approval.
-5. **Editor and sandbox:** code editor, isolated execution, and live preview.
-6. **Testing and fixes:** error reporting, diagnosis, and build verification.
-7. **GitHub workflow:** repository connection, branches, diffs, commits, and approved pushes.
-8. **Deployment:** Vercel deployment status, logs, and live URL.
-9. **Hardening:** security, mobile usability, backups, and documentation.
+## Environment
+Only these public browser-safe values are used:
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
-## Safety and project rules
+Never add a Supabase service-role key to frontend code. Never commit `.env.local`.
 
-- Never commit API keys, passwords, tokens, or private user data.
-- Keep secrets in environment variables, never in source files.
-- Require user approval before pushing code or deploying.
-- Use database Row Level Security (RLS) for private user data.
-- Run generated code in an isolated environment with appropriate limits.
-- Do not overwrite or delete project files without review.
+## Current limitations
+- Supabase credentials and Google OAuth provider credentials must be configured by the owner.
+- Password reset, account deletion, profile editing and provider management are not implemented yet.
+- AI chat, memory, coding agent, editor, terminal, GitHub write integration and Vercel deployment belong to later phases.
+- Build and live auth cannot be truthfully verified until dependencies and valid Supabase settings are supplied.
 
-## Planned technology
-
-- Next.js and TypeScript
-- Tailwind CSS
-- Supabase Auth and Postgres
-- Monaco Editor
-- GitHub integration
-- Vercel hosting
-
-Technology choices may change after checking current free-tier limits and project requirements.
-
-## Status
-
-Project initialized. Phase 1 has not started yet.
-
-## Development
-
-See `.env.example` (when added) for the required environment variable names. Never publish real secret values.
+## Branch and release safety
+Work only on `phase-1-foundation`. Do not merge into `main`, push, or deploy without the owner's explicit approval.
