@@ -4,11 +4,17 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
-export default function AuthForm({ mode }: { mode: "login" | "register" }) {
+export default function AuthForm({
+  mode,
+  initialMessage = "",
+}: {
+  mode: "login" | "register";
+  initialMessage?: string;
+}) {
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
   const [busy,setBusy] = useState(false);
-  const [message,setMessage] = useState("");
+  const [message,setMessage] = useState(initialMessage);
   const router = useRouter();
 
   async function submit(event: FormEvent<HTMLFormElement>) {
@@ -41,6 +47,6 @@ export default function AuthForm({ mode }: { mode: "login" | "register" }) {
     <button disabled={busy} className="w-full rounded-xl bg-indigo-500 px-4 py-3 text-sm font-semibold disabled:opacity-60">{busy?"Please wait…":mode==="login"?"Sign in":"Create account"}</button>
     <div className="flex items-center gap-3 text-xs muted"><span className="h-px flex-1 bg-slate-700"/>OR<span className="h-px flex-1 bg-slate-700"/></div>
     <button type="button" disabled={busy} onClick={google} className="w-full rounded-xl border border-slate-700 px-4 py-3 text-sm hover:border-slate-500 disabled:opacity-60">Continue with Google</button>
-    {message && <p role="status" className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-sm text-slate-200">{message}</p>}
+    {message && <p role="status" aria-live="polite" className="rounded-xl border border-slate-700 bg-slate-900 p-3 text-sm text-slate-200">{message}</p>}
   </form>;
 }
