@@ -4,8 +4,8 @@ import { createProject, createConversation, deleteProject, signOut } from "./act
 type Project = { id: string; name: string; description: string; updated_at: string };
 type Conversation = { id: string; title: string; updated_at: string; project_id: string | null };
 
-export default function Workspace({ projects, conversations, email }: {
-  projects: Project[]; conversations: Conversation[]; email: string;
+export default function Workspace({ projects, conversations, email, setupWarning }: {
+  projects: Project[]; conversations: Conversation[]; email: string; setupWarning?: string;
 }) {
   return <main className="mx-auto max-w-6xl px-5 py-7 sm:px-8">
     <header className="flex flex-wrap items-center justify-between gap-4">
@@ -17,6 +17,7 @@ export default function Workspace({ projects, conversations, email }: {
       <h1 className="mt-2 text-3xl font-semibold">Projects & conversations</h1>
       <p className="muted mt-2 text-sm">Your projects and chat history are private to your account.</p>
     </section>
+    {setupWarning && <div role="status" className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-sm leading-6 text-amber-100">{setupWarning}</div>}
     <section className="mt-8 grid gap-5 lg:grid-cols-[1.1fr_.9fr]">
       <div className="panel rounded-2xl p-5">
         <div className="flex items-center justify-between gap-3"><h2 className="text-lg font-semibold">Projects</h2><span className="muted text-xs">{projects.length} saved</span></div>
