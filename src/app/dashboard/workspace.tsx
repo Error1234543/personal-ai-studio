@@ -5,7 +5,7 @@ type Project = { id: string; name: string; description: string; updated_at: stri
 type Conversation = { id: string; title: string; updated_at: string; project_id: string | null };
 
 export default function Workspace({ projects, conversations, email, setupWarning, isAdmin = false }: {
-  projects: Project[]; conversations: Conversation[]; email: string; setupWarning?: string; isAdmin?: boolean; isAdmin?: boolean;
+  projects: Project[]; conversations: Conversation[]; email: string; setupWarning?: string; isAdmin?: boolean;
 }) {
   return <main className="mx-auto max-w-6xl px-5 py-7 sm:px-8">
     <header className="flex flex-wrap items-center justify-between gap-4">
