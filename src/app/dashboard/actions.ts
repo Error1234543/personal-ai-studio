@@ -11,6 +11,12 @@ async function getUserClient() {
   return { supabase, user };
 }
 
+export async function signOut() {
+  const supabase = await createClient();
+  await supabase.auth.signOut();
+  redirect("/login");
+}
+
 export async function createProject(formData: FormData) {
   const name = String(formData.get("name") || "").trim().slice(0, 100);
   const description = String(formData.get("description") || "").trim().slice(0, 1000);
