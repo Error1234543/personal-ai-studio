@@ -23,5 +23,6 @@ export default async function DashboardPage() {
     projects={projectResult.error ? [] : (projectResult.data ?? [])}
     conversations={chatResult.error ? [] : (chatResult.data ?? [])}
     setupWarning={setupWarning}
+    isAdmin={user.app_metadata?.role === "admin"}
   />;
 }
