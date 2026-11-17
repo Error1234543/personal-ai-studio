@@ -4,13 +4,13 @@ import { createProject, createConversation, deleteProject, signOut } from "./act
 type Project = { id: string; name: string; description: string; updated_at: string };
 type Conversation = { id: string; title: string; updated_at: string; project_id: string | null };
 
-export default function Workspace({ projects, conversations, email, setupWarning }: {
-  projects: Project[]; conversations: Conversation[]; email: string; setupWarning?: string;
+export default function Workspace({ projects, conversations, email, setupWarning, isAdmin = false }: {
+  projects: Project[]; conversations: Conversation[]; email: string; setupWarning?: string; isAdmin?: boolean; isAdmin?: boolean;
 }) {
   return <main className="mx-auto max-w-6xl px-5 py-7 sm:px-8">
     <header className="flex flex-wrap items-center justify-between gap-4">
       <Link href="/" className="font-semibold tracking-wide">PERSONAL <span className="text-indigo-300">AI STUDIO</span></Link>
-      <div className="flex items-center gap-3 text-sm"><span className="muted hidden sm:inline">{email}</span><form action={signOut}><button className="rounded-xl border border-slate-700 px-3 py-2">Sign out</button></form></div>
+      <div className="flex items-center gap-3 text-sm">{isAdmin && <Link href="/dashboard/admin/ai-settings" className="rounded-xl border border-indigo-400/40 px-3 py-2 text-indigo-200">AI Settings</Link>}<span className="muted hidden sm:inline">{email}</span><form action={signOut}><button className="rounded-xl border border-slate-700 px-3 py-2">Sign out</button></form></div>
     </header>
     <section className="pt-10">
       <p className="text-xs uppercase tracking-[.2em] text-indigo-300">Your workspace</p>
