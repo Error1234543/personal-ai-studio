@@ -46,8 +46,8 @@ export default function Workspace({ projects, conversations, email, setupWarning
       </div>
     </section>
     <section className="panel mt-5 rounded-2xl p-5">
-      <h2 className="font-semibold">AI assistant & coding agent</h2>
-      <p className="muted mt-2 text-sm leading-6">Project and chat storage is connected. AI responses, code editing, live preview and secure provider settings are separate development steps. Do not add API credentials until the secure settings page is ready.</p>
+      <h2 className="font-semibold">AI assistant</h2>
+      <p className="muted mt-2 text-sm leading-6">Create a conversation above to chat with the configured AI provider. Your conversations and messages remain private to your account.</p>
     </section>
   </main>;
 }
