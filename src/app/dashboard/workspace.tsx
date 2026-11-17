@@ -1,28 +1,22 @@
 import Link from "next/link";
-import { createProject, createConversation, deleteProject } from "./actions";
+import { createProject, createConversation, deleteProject, signOut } from "./actions";
 
 type Project = { id: string; name: string; description: string; updated_at: string };
 type Conversation = { id: string; title: string; updated_at: string; project_id: string | null };
 
-export default function Workspace({
-  projects, conversations, email,
-}: {
-  projects: Project[];
-  conversations: Conversation[];
-  email: string;
+export default function Workspace({ projects, conversations, email }: {
+  projects: Project[]; conversations: Conversation[]; email: string;
 }) {
   return <main className="mx-auto max-w-6xl px-5 py-7 sm:px-8">
     <header className="flex flex-wrap items-center justify-between gap-4">
       <Link href="/" className="font-semibold tracking-wide">PERSONAL <span className="text-indigo-300">AI STUDIO</span></Link>
-      <div className="flex items-center gap-3 text-sm"><span className="muted hidden sm:inline">{email}</span><form action="/auth/signout" method="post"><button className="rounded-xl border border-slate-700 px-3 py-2">Sign out</button></form></div>
+      <div className="flex items-center gap-3 text-sm"><span className="muted hidden sm:inline">{email}</span><form action={signOut}><button className="rounded-xl border border-slate-700 px-3 py-2">Sign out</button></form></div>
     </header>
-
     <section className="pt-10">
       <p className="text-xs uppercase tracking-[.2em] text-indigo-300">Your workspace</p>
       <h1 className="mt-2 text-3xl font-semibold">Projects & conversations</h1>
       <p className="muted mt-2 text-sm">Your projects and chat history are private to your account.</p>
     </section>
-
     <section className="mt-8 grid gap-5 lg:grid-cols-[1.1fr_.9fr]">
       <div className="panel rounded-2xl p-5">
         <div className="flex items-center justify-between gap-3"><h2 className="text-lg font-semibold">Projects</h2><span className="muted text-xs">{projects.length} saved</span></div>
@@ -38,28 +32,21 @@ export default function Workspace({
           </article>) : <p className="muted rounded-xl border border-dashed border-slate-700 p-6 text-center text-sm">No projects yet. Create your first project above.</p>}
         </div>
       </div>
-
       <div className="panel rounded-2xl p-5">
         <div className="flex items-center justify-between gap-3"><h2 className="text-lg font-semibold">Chat history</h2><span className="muted text-xs">{conversations.length} saved</span></div>
         <form action={createConversation} className="mt-4 grid gap-3">
           <input name="title" maxLength={160} placeholder="Chat title (e.g. Website planning)" className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 text-sm outline-none focus:border-indigo-400"/>
-          <select name="project_id" defaultValue="" className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 text-sm">
-            <option value="">General conversation</option>
-            {projects.map(project=><option key={project.id} value={project.id}>{project.name}</option>)}
-          </select>
+          <select name="project_id" defaultValue="" className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 text-sm"><option value="">General conversation</option>{projects.map(project=><option key={project.id} value={project.id}>{project.name}</option>)}</select>
           <button className="rounded-xl bg-indigo-500 px-4 py-3 text-sm font-semibold hover:bg-indigo-400">Create chat</button>
         </form>
         <div className="mt-5 space-y-2">
-          {conversations.length ? conversations.map(chat=><Link key={chat.id} href={`/dashboard/chat/${chat.id}`} className="block rounded-xl border border-slate-800 p-4 hover:border-indigo-400/60">
-            <p className="font-medium">{chat.title}</p><p className="muted mt-1 text-xs">Updated {new Date(chat.updated_at).toLocaleDateString()}</p>
-          </Link>) : <p className="muted rounded-xl border border-dashed border-slate-700 p-6 text-center text-sm">Your saved conversations will appear here.</p>}
+          {conversations.length ? conversations.map(chat=><Link key={chat.id} href={`/dashboard/chat/${chat.id}`} className="block rounded-xl border border-slate-800 p-4 hover:border-indigo-400/60"><p className="font-medium">{chat.title}</p><p className="muted mt-1 text-xs">Updated {new Date(chat.updated_at).toLocaleDateString()}</p></Link>) : <p className="muted rounded-xl border border-dashed border-slate-700 p-6 text-center text-sm">Your saved conversations will appear here.</p>}
         </div>
       </div>
     </section>
-
     <section className="panel mt-5 rounded-2xl p-5">
-      <div className="flex items-center gap-3"><span className="grid h-10 w-10 place-items-center rounded-xl bg-indigo-500/15 text-indigo-300">AI</span><div><h2 className="font-semibold">AI assistant & coding agent</h2><p className="muted mt-1 text-sm">Workspace foundation is ready. Add your AI provider Base URL, model and API key in the upcoming secure settings phase.</p></div></div>
-      <p className="muted mt-3 text-xs">No API key is requested or exposed in this dashboard yet.</p>
+      <h2 className="font-semibold">AI assistant & coding agent</h2>
+      <p className="muted mt-2 text-sm leading-6">Project and chat storage is being connected. AI responses, code editing, live preview and secure provider settings are separate next steps. Add no API credentials until the secure settings page is ready.</p>
     </section>
   </main>;
 }
